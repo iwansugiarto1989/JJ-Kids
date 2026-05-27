@@ -70,7 +70,7 @@ const KamusData = [
   { word: 'Ruler', mean: 'Penggaris', topic: 'Sekolah & Belajar ✏️', emoji: '📏' },
   { word: 'Bag', mean: 'Tas', topic: 'Sekolah & Belajar ✏️', emoji: '🎒' },
   { word: 'Whiteboard', mean: 'Papan Tulis', topic: 'Sekolah & Belajar ✏️', emoji: '📋' },
-  { word: 'Crayon', mean: 'Krayon', topic: 'Sekolah & Belajar ✏️', emoji: '🖍️' },
+  { word: 'Crayon', mean: 'Krayon', topic: 'Sekolah & Belajar ✏️', emoji: '🖍' },
   { word: 'Teacher', mean: 'Guru', topic: 'Sekolah & Belajar ✏️', emoji: '🧑‍🏫' },
   { word: 'Student', mean: 'Murid', topic: 'Sekolah & Belajar ✏️', emoji: '🧑‍🎓' },
   { word: 'Classroom', mean: 'Ruang Kelas', topic: 'Sekolah & Belajar ✏️', emoji: '🏫' },
@@ -82,7 +82,7 @@ const KamusData = [
 
   // === KELUARGA (FAMILY) ===
   { word: 'Father', mean: 'Ayah', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👨' },
-  { word: 'Mother', mean: 'Ibu', topic: 'Keluarga Kita 👨">', emoji: '👩' },
+  { word: 'Mother', mean: 'Ibu', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👩' },
   { word: 'Brother', mean: 'Saudara Laki-laki', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👦' },
   { word: 'Sister', mean: 'Saudara Perempuan', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👧' },
   { word: 'Baby', mean: 'Bayi', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👶' },
@@ -161,7 +161,7 @@ const KamusData = [
   { word: 'Glasses', mean: 'Kacamata', topic: 'Pakaian 👕', emoji: '👓' },
   { word: 'Bag', mean: 'Tas', topic: 'Pakaian 👕', emoji: '🎒' },
 
-  // === KATA KERJA SEDERHANA (VERBS - UNTUK MELENGKAPI DATA DASAR) ===
+  // === KATA KERJA SEDERHANA (VERBS) ===
   { word: 'Eat', mean: 'Makan', topic: 'Aktivitas 🏃‍♂️', emoji: '🍽️' },
   { word: 'Drink', mean: 'Minum', topic: 'Aktivitas 🏃‍♂️', emoji: '🥤' },
   { word: 'Sleep', mean: 'Tidur', topic: 'Aktivitas 🏃‍♂️', emoji: '💤' },
@@ -171,31 +171,53 @@ const KamusData = [
   { word: 'Dance', mean: 'Menari', topic: 'Aktivitas 🏃‍♂️', emoji: '💃' },
   { word: 'Read', mean: 'Membaca', topic: 'Aktivitas 🏃‍♂️', emoji: '📚' },
   { word: 'Write', mean: 'Menulis', topic: 'Aktivitas 🏃‍♂️', emoji: '✏️' },
-  { word: 'Smile', mean: 'Tersenyum', topic: 'Aktivitas 🏃‍♂️', emoji: '😊' }
+  { word: 'Smile', mean: 'Tersenyum', topic: 'Aktivitas 🏃‍♂️', emoji: '😊' },
+
+  // === KATA SIFAT MANDIRI (ADJECTIVES - FIX ISSUE 1) ===
+  { word: 'Big', mean: 'Besar', topic: 'Kata Sifat 🧠', emoji: '🐘' },
+  { word: 'Small', mean: 'Kecil', topic: 'Kata Sifat 🧠', emoji: '🐜' },
+  { word: 'Happy', mean: 'Senang', topic: 'Kata Sifat 🧠', emoji: '😊' },
+  { word: 'Sad', mean: 'Sedih', topic: 'Kata Sifat 🧠', emoji: '😢' },
+  { word: 'Fast', mean: 'Cepat', topic: 'Kata Sifat 🧠', emoji: '⚡' },
+  { word: 'Slow', mean: 'Lambat', topic: 'Kata Sifat 🧠', emoji: '🐌' },
+  { word: 'Hot', mean: 'Panas', topic: 'Kata Sifat 🧠', emoji: '🔥' },
+  { word: 'Cold', mean: 'Dingin', topic: 'Kata Sifat 🧠', emoji: '❄️' },
+  { word: 'Beautiful', mean: 'Indah', topic: 'Kata Sifat 🧠', emoji: '🌸' },
+  { word: 'Strong', mean: 'Kuat', topic: 'Kata Sifat 🧠', emoji: '💪' },
+  { word: 'Sweet', mean: 'Manis', topic: 'Kata Sifat 🧠', emoji: '🍭' },
+  { word: 'Clean', mean: 'Bersih', topic: 'Kata Sifat 🧠', emoji: '✨' },
+  { word: 'Dirty', mean: 'Kotor', topic: 'Kata Sifat 🧠', emoji: '💩' },
+  { word: 'Funny', mean: 'Lucu', topic: 'Kata Sifat 🧠', emoji: '🤡' },
+  { word: 'Quiet', mean: 'Tenang', topic: 'Kata Sifat 🧠', emoji: '🤫' },
+  { word: 'Loud', mean: 'Bising', topic: 'Kata Sifat 🧠', emoji: '📢' },
+  { word: 'New', mean: 'Baru', topic: 'Kata Sifat 🧠', emoji: '🆕' },
+  { word: 'Old', mean: 'Tua', topic: 'Kata Sifat 🧠', emoji: '👴' },
+  { word: 'Kind', mean: 'Baik', topic: 'Kata Sifat 🧠', emoji: '😇' },
+  { word: 'Scary', mean: 'Seram', topic: 'Kata Sifat 🧠', emoji: '👻' }
 ];
 
 // Generator Algoritmik Pembesar Kosakata untuk menyimulasikan 1500+ kata unik secara andal.
 const dapatkanKamusLengkap = () => {
   const hasilGabungan = [...KamusData];
 
-  // Daftar Modifikasi Kata Sifat & Warna (Diperkaya menjadi 16 tipe)
+  // Daftar Modifikasi Kata Sifat & Warna
   const modifikasi = [
-    { prefix: 'Big', prefixMean: 'Besar', tag: 'Sifat 🧠' },
-    { prefix: 'Small', prefixMean: 'Kecil', tag: 'Sifat 🧠' },
-    { prefix: 'Happy', prefixMean: 'Ceria', tag: 'Sifat 🧠' },
-    { prefix: 'Sad', prefixMean: 'Sedih', tag: 'Sifat 🧠' },
-    { prefix: 'Red', prefixMean: 'Merah', tag: 'Warna 🎨' },
-    { prefix: 'Blue', prefixMean: 'Biru', tag: 'Warna 🎨' },
-    { prefix: 'Yellow', prefixMean: 'Kuning', tag: 'Warna 🎨' },
-    { prefix: 'Green', prefixMean: 'Hijau', tag: 'Warna 🎨' },
-    { prefix: 'Beautiful', prefixMean: 'Indah', tag: 'Sifat 🧠' },
-    { prefix: 'Funny', prefixMean: 'Lucu', tag: 'Sifat 🧠' },
-    { prefix: 'Fast', prefixMean: 'Cepat', tag: 'Sifat 🧠' },
-    { prefix: 'Slow', prefixMean: 'Lambat', tag: 'Sifat 🧠' },
-    { prefix: 'Clean', prefixMean: 'Bersih', tag: 'Sifat 🧠' },
-    { prefix: 'Dirty', prefixMean: 'Kotor', tag: 'Sifat 🧠' },
-    { prefix: 'Strong', prefixMean: 'Kuat', tag: 'Sifat 🧠' },
-    { prefix: 'Sweet', prefixMean: 'Manis', tag: 'Sifat 🧠' }
+    { prefix: 'Big', prefixMean: 'Besar' },
+    { prefix: 'Small', prefixMean: 'Kecil' },
+    { prefix: 'Happy', prefixMean: 'Ceria' },
+    { prefix: 'Sad', prefixMean: 'Sedih' },
+    { prefix: 'Red', prefixMean: 'Merah' },
+    { prefix: 'Blue', prefixMean: 'Biru' },
+    { prefix: 'Yellow', prefixMean: 'Kuning' },
+    { prefix: 'Green', prefixMean: 'Hijau' },
+    { prefix: 'Beautiful', prefixMean: 'Indah' },
+    { prefix: 'Funny', prefixMean: 'Lucu' },
+    { prefix: 'Fast', prefixMean: 'Cepat' },
+    { prefix: 'Slow', prefixMean: 'Lambat' },
+    { prefix: 'Clean', prefixMean: 'Bersih' },
+    { prefix: 'Dirty', prefixMean: 'Kotor' },
+    { prefix: 'Strong', prefixMean: 'Kuat' },
+    { prefix: 'Sweet', prefixMean: 'Manis' }
   ];
 
   // Kata benda dasar yang cocok dikombinasikan (Hewan, Buah, Mainan, Kendaraan, Pakaian)
@@ -208,23 +230,21 @@ const dapatkanKamusLengkap = () => {
   );
 
   // Kombinasi Matematika: 16 (Modifikasi) * 86 (Benda Cocok) = 1376 kombinasi dinamis
+  // Kombinasi dimasukkan ke kategori khusus "Kombinasi Kata 🔀" (FIX ISSUE 2)
   for (let mod of modifikasi) {
     for (let benda of kataBendaCocok) {
-      if (benda.topic.includes('Warna') && mod.tag.includes('Warna')) continue;
-
       let kataBaruEng = `${mod.prefix} ${benda.word}`;
       let kataBaruIndo = `${benda.mean} ${mod.prefixMean}`;
 
       hasilGabungan.push({
         word: kataBaruEng,
         mean: kataBaruIndo,
-        topic: `${benda.topic} (${mod.prefixMean})`,
+        topic: 'Kombinasi Kata 🔀', // Topik khusus mandiri agar hewan tetap bersih
         emoji: benda.emoji
       });
     }
   }
 
-  // Hasil Akhir: 151 (Statis) + 1376 (Dinamis) = 1527 total kosakata unik!
   return hasilGabungan;
 };
 

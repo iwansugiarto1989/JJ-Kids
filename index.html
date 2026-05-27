@@ -685,7 +685,10 @@
                 const numPairs = diff === 'easy' ? 4 : diff === 'medium' ? 6 : diff === 'hard' ? 8 : 16;
                 
                 // Ambil pasang acak secara cerdas dari dataset PROP kamusData (penuh dari kamus.js)
-                const sourceKamus = kamusData && kamusData.length > 0 ? kamusData : getKamusData();
+                // Filter ketat membuang kombinasi kata (FIX ISSUE 3)
+                const sourceKamus = (kamusData && kamusData.length > 0 ? kamusData : getKamusData())
+                    .filter(item => item.topic !== 'Kombinasi Kata 🔀');
+                
                 const shuffledKamus = [...sourceKamus].sort(() => Math.random() - 0.5);
                 
                 // Memastikan tidak mengambil kata duplikat dalam list pasangan permainan
@@ -754,7 +757,10 @@
 
             const startBalloonGame = (selectedLang = gameLanguage) => {
                 // Ambil pertanyaan acak dari dataset PROP kamusData (penuh dari kamus.js)
-                const sourceKamus = kamusData && kamusData.length > 0 ? kamusData : getKamusData();
+                // Filter ketat membuang kombinasi kata (FIX ISSUE 3)
+                const sourceKamus = (kamusData && kamusData.length > 0 ? kamusData : getKamusData())
+                    .filter(item => item.topic !== 'Kombinasi Kata 🔀');
+                
                 const shuffledKamus = [...sourceKamus].sort(() => Math.random() - 0.5);
                 const randQ = shuffledKamus[0];
                 const decoy1 = shuffledKamus[1];
@@ -1059,7 +1065,7 @@
             const filteredVocab = listKamusSumber.filter(item => {
                 const matchesSearch = item.word.toLowerCase().includes(searchQuery.toLowerCase()) || 
                                       item.mean.toLowerCase().includes(searchQuery.toLowerCase());
-                const matchesTopic = selectedTopic === 'Semua Topik' || item.topic.includes(selectedTopic.split(' ')[0]);
+                const matchesTopic = selectedTopic === 'Semua Topik' || item.topic === selectedTopic;
                 return matchesSearch && matchesTopic;
             });
 
@@ -1135,11 +1141,15 @@
                             <option value="Buah-buahan 🍎">Buah-buahan 🍎</option>
                             <option value="Hewan 🐱">Hewan 🐱</option>
                             <option value="Sekolah & Belajar ✏️">Sekolah & Belajar ✏️</option>
-                            <option value="Keluarga Kita 👨‍👩‍Jacob">Keluarga Kita 👨‍👩‍👧‍👦</option>
+                            <option value="Keluarga Kita 👨‍👩‍👧‍👦">Keluarga Kita 👨‍👩‍👧‍👦</option>
                             <option value="Tubuh Kita 💪">Tubuh Kita 💪</option>
                             <option value="Warna & Makanan 🎨">Warna & Makanan 🎨</option>
                             <option value="Kendaraan 🚗">Kendaraan 🚗</option>
+                            <option value="Mainan & Hobi 🎈">Mainan & Hobi 🎈</option>
+                            <option value="Pakaian 👕">Pakaian 👕</option>
+                            <option value="Aktivitas 🏃‍♂️">Aktivitas 🏃‍♂️</option>
                             <option value="Kata Sifat 🧠">Kata Sifat 🧠</option>
+                            <option value="Kombinasi Kata 🔀">Kombinasi Kata 🔀</option>
                         </select>
                     </div>
 
