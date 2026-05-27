@@ -28,6 +28,9 @@
         }
     </script>
 
+    <!-- Import Database Kamus -->
+    <script src="kamus.js"></script>
+
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -112,6 +115,44 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
+        // Pembacaan Database Kamus Eksternal secara dinamis & aman dengan Fallback komprehensif jika kamus.js belum terunggah
+        const getKamusData = () => {
+            return window.JJ_Kamus_Lengkap || [
+                { word: 'Apple', mean: 'Apel', topic: 'Buah-buahan 🍎', emoji: '🍎' },
+                { word: 'Banana', mean: 'Pisang', topic: 'Buah-buahan 🍎', emoji: '🍌' },
+                { word: 'Watermelon', mean: 'Semangka', topic: 'Buah-buahan 🍎', emoji: '🍉' },
+                { word: 'Grapes', mean: 'Anggur', topic: 'Buah-buahan 🍎', emoji: '🍇' },
+                { word: 'Orange', mean: 'Jeruk', topic: 'Buah-buahan 🍎', emoji: '🍊' },
+                { word: 'Cat', mean: 'Kucing', topic: 'Hewan 🐱', emoji: '🐱' },
+                { word: 'Dog', mean: 'Anjing', topic: 'Hewan 🐱', emoji: '🐶' },
+                { word: 'Elephant', mean: 'Gajah', topic: 'Hewan 🐱', emoji: '🐘' },
+                { word: 'Fish', mean: 'Ikan', topic: 'Hewan 🐱', emoji: '🐟' },
+                { word: 'Car', mean: 'Mobil', topic: 'Kendaraan 🚗', emoji: '🚗' },
+                { word: 'Bike', mean: 'Sepeda', topic: 'Kendaraan 🚗', emoji: '🚲' },
+                { word: 'Lion', mean: 'Singa', topic: 'Hewan 🐱', emoji: '🦁' },
+                { word: 'Tiger', mean: 'Harimau', topic: 'Hewan 🐱', emoji: '🐯' },
+                { word: 'Rabbit', mean: 'Kelinci', topic: 'Hewan 🐱', emoji: '🐰' },
+                { word: 'Monkey', mean: 'Monyet', topic: 'Hewan 🐱', emoji: '🐒' },
+                { word: 'Book', mean: 'Buku', topic: 'Sekolah & Belajar ✏️', emoji: '📖' },
+                { word: 'Pencil', mean: 'Pensil', topic: 'Sekolah & Belajar ✏️', emoji: '✏️' },
+                { word: 'Eraser', mean: 'Penghapus', topic: 'Sekolah & Belajar ✏️', emoji: '🧽' },
+                { word: 'Father', mean: 'Ayah', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👨' },
+                { word: 'Mother', mean: 'Ibu', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👩' },
+                { word: 'Eye', mean: 'Mata', topic: 'Tubuh Kita 💪', emoji: '👁️' },
+                { word: 'Nose', mean: 'Hidung', topic: 'Tubuh Kita 💪', emoji: '👃' },
+                { word: 'Mouth', mean: 'Mulut', topic: 'Tubuh Kita 💪', emoji: '👄' },
+                { word: 'Red', mean: 'Merah', topic: 'Warna & Makanan 🎨', emoji: '🔴' },
+                { word: 'Blue', mean: 'Biru', topic: 'Warna & Makanan 🎨', emoji: '🔵' },
+                { word: 'Yellow', mean: 'Kuning', topic: 'Warna & Makanan 🎨', emoji: '🟡' },
+                { word: 'Green', mean: 'Hijau', topic: 'Warna & Makanan 🎨', emoji: '🟢' },
+                { word: 'Milk', mean: 'Susu', topic: 'Warna & Makanan 🎨', emoji: '🥛' },
+                { word: 'Bread', mean: 'Roti', topic: 'Warna & Makanan 🎨', emoji: '🍞' },
+                { word: 'Doll', mean: 'Boneka', topic: 'Mainan & Hobi 🎈', emoji: '🧸' },
+                { word: 'Robot', mean: 'Robot', topic: 'Mainan & Hobi 🎈', emoji: '🤖' },
+                { word: 'Balloon', mean: 'Balon', topic: 'Mainan & Hobi 🎈', emoji: '🎈' }
+            ];
+        };
+
         // Reusable CSS String Variables
         const boxBrutal = "brutal-border shadow-brutal rounded-2xl";
         const btnBrutal = "brutal-border-sm shadow-brutal brutal-click transition-all rounded-xl cursor-pointer";
@@ -193,11 +234,10 @@
                         <span className="text-4xl bg-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-black shadow-sm mb-1">🔤</span>
                         <span className="font-bold text-sm leading-tight text-black drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">ABJAD &<br/>HURUF</span>
                     </div>
-                    {/* Menu B: Misi (Gaya "Under Progress" - Nonaktif) */}
-                    <div className="bg-gray-200 border-[3px] border-gray-400 rounded-xl p-4 flex flex-col items-center justify-center text-center gap-1.5 cursor-not-allowed opacity-75 relative overflow-hidden">
-                        <span className="text-4xl bg-gray-100 rounded-full w-14 h-14 flex items-center justify-center border-2 border-gray-300 mb-0.5">🎯</span>
-                        <span className="font-bold text-sm leading-tight text-gray-500">MISI<br/>BELAJAR</span>
-                        <span className="text-[10px] italic text-rose-500 font-extrabold tracking-wider uppercase">Under Progress</span>
+                    {/* Menu B: Misi (Gaya "Misi Bulan" - Aktif!) */}
+                    <div onClick={() => navigate('misi')} className={`bg-[#22D3EE] p-4 flex flex-col items-center justify-center text-center gap-2 ${btnBrutal}`}>
+                        <span className="text-4xl bg-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-black shadow-sm mb-1">🎯</span>
+                        <span className="font-bold text-sm leading-tight text-black drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">MISI<br/>BELAJAR</span>
                     </div>
                     {/* Menu C: Kamus */}
                     <div onClick={() => navigate('kamus')} className={`bg-[#FFEDD5] p-4 flex flex-col items-center justify-center text-center gap-2 ${btnBrutal}`}>
@@ -428,7 +468,7 @@
                         // English: LANGSUNG menyebutkan keyword kosa katanya saja (cth: "Apple")
                         speakText(currentVocab.word, 'en-US', speechRate);
                     } else {
-                        // Indonesia: Berurutan Native "Apple" -> "Apel" (Mencegah salah huruf pertama)
+                        // Indonesia: Berurutan Native "Apple" -> "Apel"
                         speakSequential(currentVocab.word, currentVocab.mean, speechRate);
                     }
                 } else {
@@ -626,47 +666,50 @@
             );
         };
 
-        // 3. ZONA BERMAIN SCREEN (INTERACTIVE GAMES ENABLED & RE-STYLIZED!)
-        const GamesScreen = ({ navigate, addStars, speechRate }) => {
+        // 3. ZONA BERMAIN SCREEN (AMBIL RANDOM DARI KAMUS SECARA REAL-TIME!)
+        const GamesScreen = ({ navigate, addStars, speechRate, kamusData }) => {
             const [activeGame, setActiveGame] = useState(null); // 'memory' atau 'balloon' or null
             const [gameLanguage, setGameLanguage] = useState('en'); // 'en' atau 'id' untuk Pop Balloon
             
-            // --- GAME 1: MEMORY MATCH LOGIC ---
-            const [memoryDifficulty, setMemoryDifficulty] = useState(null); // 'easy', 'medium', 'hard' atau null
+            // --- GAME 1: MEMORY MATCH LOGIC (RANDOM KAMUS) ---
+            const [memoryDifficulty, setMemoryDifficulty] = useState(null); // 'easy', 'medium', 'hard', 'veryhard' atau null
             const [memoryCards, setMemoryCards] = useState([]);
             const [flippedIndices, setFlippedIndices] = useState([]);
             const [matchedPairs, setMatchedPairs] = useState([]);
             const [gameWon, setGameWon] = useState(false);
 
-            // Pool Kosa Kata Memory Match yang Berlimpah & Edukatif
-            const memoryPairsPool = [
-                { text: 'Cat', emoji: '🐱', matchId: 'C' },
-                { text: 'Apple', emoji: '🍎', matchId: 'A' },
-                { text: 'Dog', emoji: '🐶', matchId: 'D' },
-                { text: 'Ball', emoji: '⚽', matchId: 'B' },
-                { text: 'Banana', emoji: '🍌', matchId: 'Ba' },
-                { text: 'Car', emoji: '🚗', matchId: 'Ca' },
-                { text: 'Book', emoji: '📖', matchId: 'Bo' },
-                { text: 'Sun', emoji: '☀️', matchId: 'S' }
-            ];
-
             const startMemoryGame = (diff) => {
                 setMemoryDifficulty(diff);
+                // Atur jumlah pasang sesuai pilihan kesulitan:
+                // easy -> 4 pasang, medium -> 6 pasang, hard -> 8 pasang, veryhard -> 16 pasang
+                const numPairs = diff === 'easy' ? 4 : diff === 'medium' ? 6 : diff === 'hard' ? 8 : 16;
                 
-                // Tentukan jumlah pasang berdasarkan tingkat kesulitan
-                // Easy: 8 Kartu (4 pasang), Medium: 12 Kartu (6 pasang), Hard: 16 Kartu (8 pasang)
-                const numPairs = diff === 'easy' ? 4 : diff === 'medium' ? 6 : 8;
+                // Ambil pasang acak secara cerdas dari dataset PROP kamusData (penuh dari kamus.js)
+                const sourceKamus = kamusData && kamusData.length > 0 ? kamusData : getKamusData();
+                const shuffledKamus = [...sourceKamus].sort(() => Math.random() - 0.5);
                 
-                // Ambil pasang acak dari pool kosa kata
-                const selectedPairs = [...memoryPairsPool].sort(() => Math.random() - 0.5).slice(0, numPairs);
+                // Memastikan tidak mengambil kata duplikat dalam list pasangan permainan
+                const selectedPairs = [];
+                const wordsSet = new Set();
+                for (let item of shuffledKamus) {
+                    if (!wordsSet.has(item.word)) {
+                        wordsSet.add(item.word);
+                        selectedPairs.push(item);
+                    }
+                    if (selectedPairs.length === numPairs) break;
+                }
+                
+                // Jika data kamus kurang (fallback darurat), gunakan data seadanya
+                if (selectedPairs.length < numPairs) {
+                    selectedPairs.push(...shuffledKamus.slice(0, numPairs - selectedPairs.length));
+                }
                 
                 const cardsList = [];
                 selectedPairs.forEach((pair, idx) => {
-                    cardsList.push({ id: `t-${idx}-${pair.matchId}`, type: 'text', val: pair.text, matchId: pair.matchId });
-                    cardsList.push({ id: `e-${idx}-${pair.matchId}`, type: 'emoji', val: pair.emoji, matchId: pair.matchId });
+                    cardsList.push({ id: `t-${idx}-${pair.word}`, type: 'text', val: pair.word, matchId: pair.word });
+                    cardsList.push({ id: `e-${idx}-${pair.word}`, type: 'emoji', val: pair.emoji, matchId: pair.word });
                 });
 
-                // Acak seluruh kartu yang telah dikumpulkan
                 const shuffled = cardsList.sort(() => Math.random() - 0.5);
                 setMemoryCards(shuffled);
                 setFlippedIndices([]);
@@ -682,7 +725,6 @@
                 const newFlipped = [...flippedIndices, idx];
                 setFlippedIndices(newFlipped);
 
-                // Jika sudah membalik 2 kartu, cek kecocokan
                 if (newFlipped.length === 2) {
                     const firstCard = memoryCards[newFlipped[0]];
                     const secondCard = memoryCards[newFlipped[1]];
@@ -692,15 +734,12 @@
                         setFlippedIndices([]);
                         speakText(firstCard.type === 'text' ? firstCard.val : secondCard.val, 'en-US', speechRate);
                         
-                        // Cek kemenangan
                         if (matchedPairs.length + 2 === memoryCards.length) {
                             setGameWon(true);
-                            // Sesuaikan jumlah bintang berdasarkan tingkat kesulitan
-                            const starRewards = memoryDifficulty === 'easy' ? 10 : memoryDifficulty === 'medium' ? 20 : 30;
+                            const starRewards = memoryDifficulty === 'easy' ? 10 : memoryDifficulty === 'medium' ? 20 : memoryDifficulty === 'hard' ? 30 : 50;
                             addStars(starRewards); 
                         }
                     } else {
-                        // Tutup kartu lagi setelah delay
                         setTimeout(() => {
                             setFlippedIndices([]);
                         }, 1000);
@@ -708,34 +747,29 @@
                 }
             };
 
-            // --- GAME 2: POP BALLOON LOGIC ---
-            const [balloonQuestion, setBalloonQuestion] = useState({ word: 'Monkey', answer: 'Monyet', mean: 'Monyet' });
+            // --- GAME 2: POP BALLOON LOGIC (RANDOM KAMUS) ---
+            const [balloonQuestion, setBalloonQuestion] = useState({ word: 'Cat', answer: 'Kucing', mean: 'Kucing' });
             const [balloons, setBalloons] = useState([]);
             const [balloonWin, setBalloonWin] = useState(false);
 
             const startBalloonGame = (selectedLang = gameLanguage) => {
-                const words = [
-                    { word: 'Monkey', options: ['Monyet', 'Kucing', 'Sapi'], mean: 'Monyet' },
-                    { word: 'Banana', options: ['Pisang', 'Apel', 'Jeruk'], mean: 'Pisang' },
-                    { word: 'House', options: ['Rumah', 'Buku', 'Mobil'], mean: 'Rumah' },
-                    { word: 'Watermelon', options: ['Semangka', 'Anggur', 'Ikan'], mean: 'Semangka' },
-                    { word: 'Cat', options: ['Kucing', 'Kuda', 'Lebah'], mean: 'Kucing' },
-                    { word: 'Butterfly', options: ['Kupu-kupu', 'Semut', 'Kelinci'], mean: 'Kupu-kupu' }
-                ];
-                // Ambil pertanyaan acak
-                const randQ = words[Math.floor(Math.random() * words.length)];
+                // Ambil pertanyaan acak dari dataset PROP kamusData (penuh dari kamus.js)
+                const sourceKamus = kamusData && kamusData.length > 0 ? kamusData : getKamusData();
+                const shuffledKamus = [...sourceKamus].sort(() => Math.random() - 0.5);
+                const randQ = shuffledKamus[0];
+                const decoy1 = shuffledKamus[1];
+                const decoy2 = shuffledKamus[2];
                 
-                // Setel format tanya jawab sesuai bahasa terpilih
                 if (selectedLang === 'en') {
                     setBalloonQuestion({ word: randQ.word, answer: randQ.mean });
                 } else {
                     setBalloonQuestion({ word: randQ.mean, answer: randQ.word });
                 }
 
-                // Acak urutan jawaban balon
-                const opts = selectedLang === 'en' ? randQ.options : [randQ.word, 'Cat', 'Ball'].sort(() => Math.random() - 0.5);
+                const opts = selectedLang === 'en' 
+                    ? [randQ.mean, decoy1.mean, decoy2.mean].sort(() => Math.random() - 0.5)
+                    : [randQ.word, decoy1.word, decoy2.word].sort(() => Math.random() - 0.5);
                 
-                // Acak warna dan acak urutan posisi kiri agar posisi balon tidak selalu sama
                 const colors = ['bg-rose-400', 'bg-sky-400', 'bg-yellow-400', 'bg-purple-400', 'bg-lime-400'].sort(() => Math.random() - 0.5);
                 const leftPositions = ['15%', '42%', '68%'].sort(() => Math.random() - 0.5);
 
@@ -745,7 +779,7 @@
                         text: opt,
                         color: colors[i],
                         left: leftPositions[i],
-                        animClass: `float-balloon-${i}` // Menggunakan delay staggered
+                        animClass: `float-balloon-${i}`
                     };
                 });
 
@@ -753,7 +787,6 @@
                 setBalloonWin(false);
                 setActiveGame('balloon');
                 
-                // Hanya menyebutkan nama katanya saja
                 if (selectedLang === 'en') {
                     speakText(randQ.word, 'en-US', speechRate);
                 } else {
@@ -764,20 +797,39 @@
             const handlePop = (balloon) => {
                 if (balloon.text === balloonQuestion.answer) {
                     if (gameLanguage === 'en') {
-                        speakText(balloon.text, 'id-ID', speechRate); // Ucapkan jawaban Indonesia
+                        speakText(balloon.text, 'id-ID', speechRate);
                     } else {
-                        speakText(balloon.text, 'en-US', speechRate); // Ucapkan jawaban Inggris
+                        speakText(balloon.text, 'en-US', speechRate);
                     }
                     setBalloonWin(true);
-                    addStars(15); // Tambah 15 Bintang!
+                    addStars(15);
                 } else {
                     speakText("Try again", 'en-US', speechRate);
                     alert("Aduh! Cari balon dengan arti kata yang tepat ya! 🎈");
                 }
             };
 
+            // Setup ukuran kartu untuk menunjang grid Very Hard (32 kartu) agar rapi
+            const cardSizeClass = memoryDifficulty === 'veryhard' 
+                ? 'aspect-[3/4] p-0.5 text-xs' 
+                : memoryDifficulty === 'hard' 
+                ? 'aspect-[3/4] p-1 text-sm' 
+                : 'aspect-[3/4] p-2 text-base';
+            
+            const emojiSizeClass = memoryDifficulty === 'veryhard' 
+                ? 'text-lg md:text-xl' 
+                : memoryDifficulty === 'hard' 
+                ? 'text-2xl' 
+                : 'text-3xl';
+                
+            const textSizeClass = memoryDifficulty === 'veryhard'
+                ? 'text-[8px] leading-tight font-bold break-all'
+                : memoryDifficulty === 'hard'
+                ? 'text-[10px] leading-tight font-black break-words'
+                : 'text-xs font-black break-words';
+
             return (
-                <div className="flex flex-col gap-4 pb-6 relative">
+                <div className="flex flex-col gap-4 pb-6 relative pt-2">
                     {activeGame === null ? (
                         /* TAMPILAN LIST GAME UTAMA */
                         <>
@@ -832,62 +884,69 @@
                             </div>
 
                             {memoryDifficulty === null ? (
-                                /* MENU MEMILIH TINGKAT KESULITAN (Easy, Medium, Hard) */
-                                <div className="w-full flex flex-col gap-4 py-6 text-center">
+                                /* MENU MEMILIH TINGKAT KESULITAN (Easy, Medium, Hard, Very Hard) */
+                                <div className="w-full flex flex-col gap-3 py-4 text-center">
                                     <h3 className="font-black text-xl text-black">PILIH TINGKAT KESULITAN ⚙️</h3>
                                     <p className="text-xs font-bold text-gray-500 uppercase">Makin sulit, makin banyak bintang!</p>
                                     
-                                    <div className="flex flex-col gap-3.5 mt-2">
+                                    <div className="flex flex-col gap-3 mt-2">
                                         <button 
                                             onClick={() => startMemoryGame('easy')}
-                                            className="bg-green-300 py-3.5 px-6 font-black text-lg border-3 border-black shadow-brutal rounded-2xl brutal-click flex justify-between items-center"
+                                            className="bg-green-300 py-3 px-6 font-black text-base border-3 border-black shadow-brutal-sm rounded-xl brutal-click flex justify-between items-center"
                                         >
                                             <span>🟢 EASY (8 KARTU)</span>
-                                            <span className="text-xs bg-white px-2 py-1 rounded border-2 border-black">⭐ +10</span>
+                                            <span className="text-xs bg-white px-2 py-0.5 rounded border-2 border-black">⭐ +10</span>
                                         </button>
                                         <button 
                                             onClick={() => startMemoryGame('medium')}
-                                            className="bg-yellow-300 py-3.5 px-6 font-black text-lg border-3 border-black shadow-brutal rounded-2xl brutal-click flex justify-between items-center"
+                                            className="bg-yellow-300 py-3 px-6 font-black text-base border-3 border-black shadow-brutal-sm rounded-xl brutal-click flex justify-between items-center"
                                         >
                                             <span>🟡 MEDIUM (12 KARTU)</span>
-                                            <span className="text-xs bg-white px-2 py-1 rounded border-2 border-black">⭐ +20</span>
+                                            <span className="text-xs bg-white px-2 py-0.5 rounded border-2 border-black">⭐ +20</span>
                                         </button>
                                         <button 
                                             onClick={() => startMemoryGame('hard')}
-                                            className="bg-rose-300 py-3.5 px-6 font-black text-lg border-3 border-black shadow-brutal rounded-2xl brutal-click flex justify-between items-center"
+                                            className="bg-rose-300 py-3 px-6 font-black text-base border-3 border-black shadow-brutal-sm rounded-xl brutal-click flex justify-between items-center"
                                         >
                                             <span>🔴 HARD (16 KARTU)</span>
-                                            <span className="text-xs bg-white px-2 py-1 rounded border-2 border-black">⭐ +30</span>
+                                            <span className="text-xs bg-white px-2 py-0.5 rounded border-2 border-black">⭐ +30</span>
+                                        </button>
+                                        <button 
+                                            onClick={() => startMemoryGame('veryhard')}
+                                            className="bg-purple-300 text-white py-3 px-6 font-black text-base border-3 border-black shadow-brutal-sm rounded-xl brutal-click flex justify-between items-center"
+                                        >
+                                            <span>🔥 VERY HARD (32 KARTU)</span>
+                                            <span className="text-xs bg-white text-black px-2 py-0.5 rounded border-2 border-black">⭐ +50</span>
                                         </button>
                                     </div>
                                 </div>
                             ) : (
-                                /* AREA GAME CARDS GRID YANG TELAH DIOPTIMALKAN */
+                                /* AREA GAME CARDS GRID */
                                 <>
-                                    <div className="bg-yellow-100 border-2 border-black p-3 text-center rounded-xl w-full">
-                                        <p className="text-xs font-black text-amber-900 uppercase">Temukan pasangan kata & gambar emoji yang sama!</p>
+                                    <div className="bg-yellow-100 border-2 border-black p-2 text-center rounded-xl w-full">
+                                        <p className="text-[11px] font-black text-amber-900 uppercase leading-tight">Temukan pasangan kata & gambar emoji dari Kamus JJ Kids!</p>
                                     </div>
 
                                     {/* Grid dinamis menyesuaikan tingkat kesulitan agar muat rapi */}
-                                    <div className={`grid grid-cols-4 gap-2 w-full mt-2 ${memoryDifficulty === 'hard' ? 'max-h-[400px] overflow-y-auto p-1' : ''}`}>
+                                    <div className={`grid grid-cols-4 gap-2 w-full mt-1 max-h-[380px] overflow-y-auto p-1 no-scrollbar`}>
                                         {memoryCards.map((card, idx) => {
                                             const isFlipped = flippedIndices.includes(idx) || matchedPairs.includes(idx);
                                             return (
                                                 <div 
                                                     key={card.id}
                                                     onClick={() => handleCardClick(idx)}
-                                                    className={`aspect-[3/4] brutal-border-sm rounded-xl flex items-center justify-center text-center font-black cursor-pointer shadow-brutal-sm brutal-click transition-all duration-300 ${isFlipped ? 'bg-white rotate-180' : 'bg-[#7DD3FC]'} ${memoryDifficulty === 'hard' ? 'p-1' : 'p-2'}`}
+                                                    className={`${cardSizeClass} brutal-border-sm rounded-xl flex items-center justify-center text-center font-black cursor-pointer shadow-brutal-sm brutal-click transition-all duration-300 ${isFlipped ? 'bg-white rotate-180' : 'bg-[#7DD3FC]'} ${memoryDifficulty === 'hard' ? 'p-1' : 'p-2'}`}
                                                 >
                                                     {isFlipped ? (
-                                                        <div className="rotate-180 text-xl font-bold flex flex-col justify-center items-center">
+                                                        <div className="rotate-180 flex flex-col justify-center items-center w-full">
                                                             {card.type === 'emoji' ? (
-                                                                <span className={`${memoryDifficulty === 'hard' ? 'text-2xl' : 'text-3xl'}`}>{card.val}</span>
+                                                                <span className={emojiSizeClass}>{card.val}</span>
                                                             ) : (
-                                                                <span className={`${memoryDifficulty === 'hard' ? 'text-[10px]' : 'text-xs'} tracking-tighter leading-none font-black break-words`}>{card.val}</span>
+                                                                <span className={textSizeClass}>{card.val}</span>
                                                             )}
                                                         </div>
                                                     ) : (
-                                                        <span className={`${memoryDifficulty === 'hard' ? 'text-xl' : 'text-2xl'} text-white`}>❓</span>
+                                                        <span className={`${memoryDifficulty === 'veryhard' ? 'text-lg' : 'text-2xl'} text-white`}>❓</span>
                                                     )}
                                                 </div>
                                             );
@@ -901,7 +960,7 @@
                                             <h3 className="font-black text-3xl text-emerald-600">LUAR BIASA!</h3>
                                             <p className="font-bold text-sm text-gray-700 mt-2">Kamu berhasil menyelesaikan permainan memori!</p>
                                             <div className="bg-yellow-300 border-2 border-black px-4 py-2 mt-4 rounded-xl shadow-brutal-sm font-black text-xl flex items-center gap-1">
-                                                ⭐ +{memoryDifficulty === 'easy' ? 10 : memoryDifficulty === 'medium' ? 20 : 30} Bintang Didapatkan!
+                                                ⭐ +{memoryDifficulty === 'easy' ? 10 : memoryDifficulty === 'medium' ? 20 : memoryDifficulty === 'hard' ? 30 : 50} Bintang Didapatkan!
                                             </div>
                                             <button 
                                                 onClick={() => { setMemoryDifficulty(null); }} 
@@ -972,7 +1031,7 @@
                                     <h3 className="font-black text-3xl text-emerald-600">TEBAKAN TEPAT!</h3>
                                     <p className="font-bold text-sm text-gray-700 mt-2">Balon yang kamu pecahkan benar sekali!</p>
                                     <div className="bg-yellow-300 border-2 border-black px-4 py-2 mt-4 rounded-xl shadow-brutal-sm font-black text-xl flex items-center gap-1">
-                                        ⭐ +15 Bapatkan!
+                                        ⭐ +15 Bintang!
                                     </div>
                                     <button 
                                         onClick={() => startBalloonGame(gameLanguage)} 
@@ -988,122 +1047,30 @@
             );
         };
 
-        // 4. KAMUS PINTAR SCREEN (FUllY FUNCTIONAL FOR TK-SD AGE)
-        const KamusScreen = ({ navigate, speechRate }) => {
+        // 4. KAMUS PINTAR SCREEN (MENGGUNAKAN DATA STATE YANG SELALU TERUPDATE!)
+        const KamusScreen = ({ navigate, speechRate, kamusData }) => {
             const [searchQuery, setSearchQuery] = useState('');
             const [selectedTopic, setSelectedTopic] = useState('Semua Topik');
-            const [direction, setDirection] = useState('en-id'); // Arah bahasa: 'en-id' (Inggris-Indo) atau 'id-en' (Indo-Inggris)
+            const [direction, setDirection] = useState('en-id');
 
-            // Database Kosakata Super Kaya (Lebih Banyak & Edukatif untuk TK-SD)
-            const fullVocabDatabase = [
-                // BUAH-BUAHAN (FRUITS)
-                { word: 'Apple', mean: 'Apel', topic: 'Buah-buahan 🍎', emoji: '🍎' },
-                { word: 'Banana', mean: 'Pisang', topic: 'Buah-buahan 🍎', emoji: '🍌' },
-                { word: 'Watermelon', mean: 'Semangka', topic: 'Buah-buahan 🍎', emoji: '🍉' },
-                { word: 'Grapes', mean: 'Anggur', topic: 'Buah-buahan 🍎', emoji: '🍇' },
-                { word: 'Orange', mean: 'Jeruk', topic: 'Buah-buahan 🍎', emoji: '🍊' },
-                { word: 'Mango', mean: 'Mangga', topic: 'Buah-buahan 🍎', emoji: '🥭' },
-                { word: 'Strawberry', mean: 'Stroberi', topic: 'Buah-buahan 🍎', emoji: '🍓' },
-                { word: 'Pineapple', mean: 'Nanas', topic: 'Buah-buahan 🍎', emoji: '🍍' },
-                { word: 'Avocado', mean: 'Alpukat', topic: 'Buah-buahan 🍎', emoji: '🥑' },
-                { word: 'Cherry', mean: 'Ceri', topic: 'Buah-buahan 🍎', emoji: '🍒' },
-                { word: 'Coconut', mean: 'Kelapa', topic: 'Buah-buahan 🍎', emoji: '🥥' },
-                { word: 'Lemon', mean: 'Lemon', topic: 'Buah-buahan 🍎', emoji: '🍋' },
-                { word: 'Melon', mean: 'Melon', topic: 'Buah-buahan 🍎', emoji: '🍈' },
-                { word: 'Papaya', mean: 'Pepaya', topic: 'Buah-buahan 🍎', emoji: '🥭' },
+            // Gunakan data state dinamis (yang berisi 1500+ kata)
+            const listKamusSumber = kamusData && kamusData.length > 0 ? kamusData : getKamusData();
 
-                // HEWAN (ANIMALS)
-                { word: 'Cat', mean: 'Kucing', topic: 'Hewan 🐱', emoji: '🐱' },
-                { word: 'Dog', mean: 'Anjing', topic: 'Hewan 🐱', emoji: '🐶' },
-                { word: 'Lion', mean: 'Singa', topic: 'Hewan 🐱', emoji: '🦁' },
-                { word: 'Tiger', mean: 'Harimau', topic: 'Hewan 🐱', emoji: '🐯' },
-                { word: 'Rabbit', mean: 'Kelinci', topic: 'Hewan 🐱', emoji: '🐰' },
-                { word: 'Monkey', mean: 'Monyet', topic: 'Hewan 🐱', emoji: '🐒' },
-                { word: 'Elephant', mean: 'Gajah', topic: 'Hewan 🐱', emoji: '🐘' },
-                { word: 'Giraffe', mean: 'Jerapah', topic: 'Hewan 🐱', emoji: '🦒' },
-                { word: 'Zebra', mean: 'Zebra', topic: 'Hewan 🐱', emoji: '🦓' },
-                { word: 'Cow', mean: 'Sapi', topic: 'Hewan 🐱', emoji: '🐮' },
-                { word: 'Chicken', mean: 'Ayam', topic: 'Hewan 🐱', emoji: '🐔' },
-                { word: 'Bird', mean: 'Burung', topic: 'Hewan 🐱', emoji: '🐦' },
-                { word: 'Fish', mean: 'Ikan', topic: 'Hewan 🐱', emoji: '🐟' },
-                { word: 'Frog', mean: 'Katak', topic: 'Hewan 🐱', emoji: '🐸' },
-                { word: 'Duck', mean: 'Bebek', topic: 'Hewan 🐱', emoji: '🦆' },
-                { word: 'Sheep', mean: 'Domba', topic: 'Hewan 🐱', emoji: '🐑' },
-                { word: 'Horse', mean: 'Kuda', topic: 'Hewan 🐱', emoji: '🐴' },
-                { word: 'Bear', mean: 'Beruang', topic: 'Hewan 🐱', emoji: '🐻' },
-                { word: 'Butterfly', mean: 'Kupu-kupu', topic: 'Hewan 🐱', emoji: '🦋' },
-
-                // SEKOLAH (SCHOOL)
-                { word: 'Book', mean: 'Buku', topic: 'Sekolah & Belajar ✏️', emoji: '📖' },
-                { word: 'Pencil', mean: 'Pensil', topic: 'Sekolah & Belajar ✏️', emoji: '✏️' },
-                { word: 'Eraser', mean: 'Penghapus', topic: 'Sekolah & Belajar ✏️', emoji: '🧽' },
-                { word: 'Ruler', mean: 'Penggaris', topic: 'Sekolah & Belajar ✏️', emoji: '📏' },
-                { word: 'Bag', mean: 'Tas', topic: 'Sekolah & Belajar ✏️', emoji: '🎒' },
-                { word: 'Whiteboard', mean: 'Papan Tulis', topic: 'Sekolah & Belajar ✏️', emoji: '📋' },
-                { word: 'Crayon', mean: 'Krayon', topic: 'Sekolah & Belajar ✏️', emoji: '🖍' },
-                { word: 'Teacher', mean: 'Guru', topic: 'Sekolah & Belajar ✏️', emoji: '🧑‍🏫' },
-                { word: 'Student', mean: 'Murid', topic: 'Sekolah & Belajar ✏️', emoji: '🧑‍🎓' },
-                { word: 'Classroom', mean: 'Ruang Kelas', topic: 'Sekolah & Belajar ✏️', emoji: '🏫' },
-                { word: 'Desk', mean: 'Meja Tulis', topic: 'Sekolah & Belajar ✏️', emoji: '🪑' },
-                { word: 'Scissors', mean: 'Gunting', topic: 'Sekolah & Belajar ✏️', emoji: '✂️' },
-
-                // KELUARGA (FAMILY)
-                { word: 'Father', mean: 'Ayah', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👨' },
-                { word: 'Mother', mean: 'Ibu', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👩' },
-                { word: 'Brother', mean: 'Saudara Laki-laki', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👦' },
-                { word: 'Sister', mean: 'Saudara Perempuan', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👧' },
-                { word: 'Baby', mean: 'Bayi', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👶' },
-                { word: 'Grandfather', mean: 'Kakek', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👴' },
-                { word: 'Grandmother', mean: 'Nenek', topic: 'Keluarga Kita 👨‍👩‍👧‍👦', emoji: '👵' },
-
-                // ANGGOTA TUBUH (BODY PARTS)
-                { word: 'Eye', mean: 'Mata', topic: 'Tubuh Kita 💪', emoji: '👁️' },
-                { word: 'Nose', mean: 'Hidung', topic: 'Tubuh Kita 💪', emoji: '👃' },
-                { word: 'Mouth', mean: 'Mulut', topic: 'Tubuh Kita 💪', emoji: '👄' },
-                { word: 'Ear', mean: 'Telinga', topic: 'Tubuh Kita 💪', emoji: '👂' },
-                { word: 'Hand', mean: 'Tangan', topic: 'Tubuh Kita 💪', emoji: '✋' },
-                { word: 'Foot', mean: 'Kaki', topic: 'Tubuh Kita 💪', emoji: '🦶' },
-                { word: 'Hair', mean: 'Rambut', topic: 'Tubuh Kita 💪', emoji: '💇' },
-                { word: 'Finger', mean: 'Jari', topic: 'Tubuh Kita 💪', emoji: '🖐️' },
-                { word: 'Teeth', mean: 'Gigi', topic: 'Tubuh Kita 💪', emoji: '🦷' },
-
-                // WARNA & MAKANAN (COLORS & FOODS)
-                { word: 'Red', mean: 'Merah', topic: 'Warna & Makanan 🎨', emoji: '🔴' },
-                { word: 'Blue', mean: 'Biru', topic: 'Warna & Makanan 🎨', emoji: '🔵' },
-                { word: 'Yellow', mean: 'Kuning', topic: 'Warna & Makanan 🎨', emoji: '🟡' },
-                { word: 'Green', mean: 'Hijau', topic: 'Warna & Makanan 🎨', emoji: '🟢' },
-                { word: 'Purple', mean: 'Ungu', topic: 'Warna & Makanan 🎨', emoji: '🟣' },
-                { word: 'Pink', mean: 'Merah Muda', topic: 'Warna & Makanan 🎨', emoji: '💗' },
-                { word: 'White', mean: 'Putih', topic: 'Warna & Makanan 🎨', emoji: '⚪' },
-                { word: 'Black', mean: 'Hitam', topic: 'Warna & Makanan 🎨', emoji: '⚫' },
-                { word: 'Ice Cream', mean: 'Es Krim', topic: 'Warna & Makanan 🎨', emoji: '🍦' },
-                { word: 'Milk', mean: 'Susu', topic: 'Warna & Makanan 🎨', emoji: '🥛' },
-                { word: 'Bread', mean: 'Roti', topic: 'Warna & Makanan 🎨', emoji: '🍞' },
-                { word: 'Cake', mean: 'Kue', topic: 'Warna & Makanan 🎨', emoji: '🍰' },
-                { word: 'Candy', mean: 'Permen', topic: 'Warna & Makanan 🎨', emoji: '🍬' },
-                { word: 'Donut', mean: 'Donat', topic: 'Warna & Makanan 🎨', emoji: '🍩' }
-            ];
-
-            // Filter data real-time berdasarkan teks ketikan dan pilihan filter topik
-            const filteredVocab = fullVocabDatabase.filter(item => {
+            const filteredVocab = listKamusSumber.filter(item => {
                 const matchesSearch = item.word.toLowerCase().includes(searchQuery.toLowerCase()) || 
                                       item.mean.toLowerCase().includes(searchQuery.toLowerCase());
-                const matchesTopic = selectedTopic === 'Semua Topik' || item.topic === selectedTopic;
+                const matchesTopic = selectedTopic === 'Semua Topik' || item.topic.includes(selectedTopic.split(' ')[0]);
                 return matchesSearch && matchesTopic;
             });
 
-            // Jalankan pengucapan dwibahasa sesuai arah tombol arah bahasa
             const handleVocabSpeech = (item) => {
                 if (direction === 'en-id') {
-                    // Inggris ke Indonesia (cth: Baby -> Bayi)
                     speakSequential(item.word, item.mean, speechRate);
                 } else {
-                    // Indonesia ke Inggris (cth: Bayi -> Baby)
                     speakSequential(item.mean, item.word, speechRate);
                 }
             };
 
-            // Mengucapkan teks ketikan pencarian secara dinamis (Cerdas) jika tidak ada di database
             const handleSearchSpeak = () => {
                 if (searchQuery.trim() !== '') {
                     speakText(searchQuery, 'en-US', speechRate);
@@ -1111,7 +1078,7 @@
             };
 
             return (
-                <div className="flex flex-col gap-4 pb-6 pt-2">
+                <div className="flex flex-col gap-4 pb-6 pt-5">
                     {/* Top Bar */}
                     <button onClick={() => navigate('home')} className={`self-start bg-white px-3 py-1.5 text-sm font-bold flex items-center gap-1 ${btnBrutal}`}>
                         <span>⬅️</span> Menu Utama
@@ -1122,7 +1089,7 @@
                         <h2 className="font-black text-2xl mb-1 relative z-10">KAMUS PINTAR 📖</h2>
                         <p className="font-semibold text-xs mb-3 relative z-10 text-gray-700">Cari kata, ketuk speaker untuk mendengar audio!</p>
                         <div className="inline-block bg-white border-2 border-black rounded-full px-3 py-1 text-xs font-bold shadow-brutal-sm relative z-10">
-                            Menampilkan {filteredVocab.length} Kata Anak Pintar
+                            Menampilkan {filteredVocab.length} Kata Pilihan
                         </div>
                     </div>
 
@@ -1156,12 +1123,7 @@
                                 className={`w-full p-3 pr-10 text-sm font-semibold outline-none ${btnBrutal} cursor-text`}
                             />
                             {searchQuery.trim() !== '' && (
-                                <button 
-                                    onClick={handleSearchSpeak}
-                                    className="absolute right-3 text-lg brutal-click"
-                                >
-                                    🔊
-                                </button>
+                                <button onClick={handleSearchSpeak} className="absolute right-3 text-lg brutal-click">🔊</button>
                             )}
                         </div>
                         <select 
@@ -1173,9 +1135,11 @@
                             <option value="Buah-buahan 🍎">Buah-buahan 🍎</option>
                             <option value="Hewan 🐱">Hewan 🐱</option>
                             <option value="Sekolah & Belajar ✏️">Sekolah & Belajar ✏️</option>
-                            <option value="Keluarga Kita 👨‍👩‍👧‍👦">Keluarga Kita 👨‍👩‍👧‍👦</option>
+                            <option value="Keluarga Kita 👨‍👩‍Jacob">Keluarga Kita 👨‍👩‍👧‍👦</option>
                             <option value="Tubuh Kita 💪">Tubuh Kita 💪</option>
                             <option value="Warna & Makanan 🎨">Warna & Makanan 🎨</option>
+                            <option value="Kendaraan 🚗">Kendaraan 🚗</option>
+                            <option value="Kata Sifat 🧠">Kata Sifat 🧠</option>
                         </select>
                     </div>
 
@@ -1221,7 +1185,291 @@
             );
         };
 
-        // 5. PROFIL MENU SCREEN (WITH SPEECH SPEED SETTING & BETTER STAR RESET)
+        // 5. MISI BELAJAR SCREEN (KINI BERBASIS SELEKSI KARTU MISI!)
+        const MisiScreen = ({ navigate, addStars, speechRate }) => {
+            const [selectedMisi, setSelectedMisi] = useState(null); // null (list misi) atau 'bulan'
+            const [subMode, setSubMode] = useState(null); // 'belajar' atau 'latihan' atau null
+            
+            // Database Bulan 1 s.d 12 dengan asosisasi gambar cuaca (Oktober-Maret: Hujan, April-September: Matahari)
+            const monthsData = [
+                { num: 1, en: 'January', id: 'Januari', weather: 'hujan', emoji: '🌧️', bg: 'bg-blue-100' },
+                { num: 2, en: 'February', id: 'Februari', weather: 'hujan', emoji: '🌧️', bg: 'bg-blue-100' },
+                { num: 3, en: 'March', id: 'Maret', weather: 'hujan', emoji: '🌧️', bg: 'bg-blue-100' },
+                { num: 4, en: 'April', id: 'April', weather: 'panas', emoji: '☀️', bg: 'bg-yellow-100' },
+                { num: 5, en: 'May', id: 'Mei', weather: 'panas', emoji: '☀️', bg: 'bg-yellow-100' },
+                { num: 6, en: 'June', id: 'Juni', weather: 'panas', emoji: '☀️', bg: 'bg-yellow-100' },
+                { num: 7, py: 'July', en: 'July', id: 'Juli', weather: 'panas', emoji: '☀️', bg: 'bg-yellow-100' },
+                { num: 8, en: 'August', id: 'Agustus', weather: 'panas', emoji: '☀️', bg: 'bg-yellow-100' },
+                { num: 9, en: 'September', id: 'September', weather: 'panas', emoji: '☀️', bg: 'bg-yellow-100' },
+                { num: 10, en: 'October', id: 'Oktober', weather: 'hujan', emoji: '🌧️', bg: 'bg-blue-100' },
+                { num: 11, en: 'November', id: 'November', weather: 'hujan', emoji: '🌧️', bg: 'bg-blue-100' },
+                { num: 12, en: 'December', id: 'Desember', weather: 'hujan', emoji: '🌧️', bg: 'bg-blue-100' }
+            ];
+
+            // --- STATE LATIHAN KUIS ---
+            const [kuisType, setKuisType] = useState(null); // 1, 2, atau 3
+            const [currentQ, setCurrentQ] = useState(null);
+            const [answersOptions, setAnswersOptions] = useState([]);
+            const [feedback, setFeedback] = useState(null); // 'correct' atau 'wrong' atau null
+
+            const generateKuis = (type) => {
+                setKuisType(type);
+                setFeedback(null);
+                const randMonth = monthsData[Math.floor(Math.random() * monthsData.length)];
+                setCurrentQ(randMonth);
+
+                if (type === 1) {
+                    // Tipe 1: Tanya musim (Hujan / Matahari)
+                    setAnswersOptions(['Hujan 🌧️', 'Panas ☀️']);
+                } else if (type === 2) {
+                    // Tipe 2: Angka -> Nama Bulan
+                    const decoys = monthsData.filter(m => m.num !== randMonth.num).sort(() => Math.random() - 0.5).slice(0, 2);
+                    const opts = [randMonth, ...decoys].sort(() => Math.random() - 0.5);
+                    setAnswersOptions(opts);
+                } else if (type === 3) {
+                    // Tipe 3: Bulan -> Angka
+                    const decoys = monthsData.filter(m => m.num !== randMonth.num).sort(() => Math.random() - 0.5).slice(0, 2);
+                    const opts = [randMonth, ...decoys].sort(() => Math.random() - 0.5);
+                    setAnswersOptions(opts);
+                }
+            };
+
+            const handleAnswer = (ans) => {
+                let isCorrect = false;
+                if (kuisType === 1) {
+                    const mus = currentQ.weather === 'hujan' ? 'Hujan 🌧️' : 'Panas ☀️';
+                    isCorrect = ans === mus;
+                } else if (kuisType === 2) {
+                    isCorrect = ans.num === currentQ.num;
+                } else if (kuisType === 3) {
+                    isCorrect = ans.num === currentQ.num;
+                }
+
+                if (isCorrect) {
+                    setFeedback('correct');
+                    addStars(10);
+                    speakText("hebat", 'id-ID', speechRate); // Ucapkan singkat "hebat" sesuai instruksi
+                } else {
+                    setFeedback('wrong');
+                    speakText("Ayo coba lagi ya!", 'id-ID', speechRate);
+                }
+            };
+
+            return (
+                <div className="flex flex-col gap-4 pb-6 pt-2 h-full">
+                    
+                    {/* TINGKAT 1: LIST SEMUA MISI BELAJAR */}
+                    {selectedMisi === null ? (
+                        <>
+                            <button onClick={() => navigate('home')} className={`self-start bg-white px-3 py-1.5 text-sm font-bold flex items-center gap-1 ${btnBrutal}`}>
+                                <span>⬅️</span> Menu Utama
+                            </button>
+
+                            <div className={`bg-[#22D3EE] p-5 text-center flex flex-col items-center gap-2 mt-2 ${boxBrutal}`}>
+                                <div className="text-5xl drop-shadow-md">🎯</div>
+                                <h2 className="font-black text-2xl text-black leading-tight">MISI BELAJAR</h2>
+                                <p className="font-semibold text-xs text-black/80">Pilih misi belajarmu hari ini!</p>
+                            </div>
+
+                            <div className="flex flex-col gap-4 mt-3">
+                                {/* Misi Utama: Bulan & Musim */}
+                                <div 
+                                    onClick={() => setSelectedMisi('bulan')}
+                                    className="bg-yellow-200 hover:bg-yellow-300 p-4 border-3 border-black shadow-brutal-sm rounded-2xl brutal-click cursor-pointer flex justify-between items-center gap-2"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-4xl bg-white border-2 border-black rounded-xl p-1 shadow-sm">🗓️</span>
+                                        <div className="text-left">
+                                            <h3 className="font-black text-base text-black">Misi Bulan & Musim</h3>
+                                            <p className="text-[10px] font-bold text-gray-600">Januari-Desember & Cuaca Hujan/Panas</p>
+                                        </div>
+                                    </div>
+                                    <span className="text-xl font-bold bg-white p-1 rounded-full border-2 border-black leading-none shadow-sm shrink-0">➔</span>
+                                </div>
+
+                                {/* Misi Tambahan (Dekoratif/Under Progress) */}
+                                <div className="bg-gray-100 border-3 border-dashed border-gray-400 p-4 rounded-2xl opacity-70 flex justify-between items-center gap-2 cursor-not-allowed">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-4xl bg-gray-200 border-2 border-gray-300 rounded-xl p-1">⏰</span>
+                                        <div className="text-left">
+                                            <h3 className="font-black text-base text-gray-400">Misi Jam & Waktu</h3>
+                                            <p className="text-[10px] font-bold text-gray-400">Belajar membaca jam dinding di JJ Kids</p>
+                                        </div>
+                                    </div>
+                                    <span className="text-[8px] font-black uppercase text-rose-500 bg-rose-50 border border-rose-500 px-2 py-0.5 rounded italic shrink-0">Under Progress</span>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        /* TINGKAT 2: DETAIL MISI TERPILIH (BULAN & MUSIM) */
+                        <div className="h-full flex flex-col gap-4">
+                            
+                            {subMode === null ? (
+                                <>
+                                    <button onClick={() => setSelectedMisi(null)} className={`self-start bg-white px-3 py-1.5 text-xs font-bold flex items-center gap-1 ${btnBrutal}`}>
+                                        <span>⬅️</span> List Misi
+                                    </button>
+
+                                    <div className={`bg-[#FFD25E] p-4 text-center flex flex-col items-center gap-2 mt-2 ${boxBrutal}`}>
+                                        <div className="text-5xl">🗓️</div>
+                                        <h2 className="font-black text-xl text-black">MISI: BULAN & MUSIM</h2>
+                                        <p className="font-semibold text-xs text-black/85">Pelajari nama bulan dan musim Indonesia!</p>
+                                    </div>
+
+                                    <div className="flex flex-col gap-4 mt-4">
+                                        <button 
+                                            onClick={() => setSubMode('belajar')}
+                                            className="bg-yellow-300 py-4.5 px-6 font-black text-lg border-4 border-black shadow-brutal rounded-2xl brutal-click flex justify-between items-center"
+                                        >
+                                            <span>📖 BELAJAR BULAN</span>
+                                            <span>➔</span>
+                                        </button>
+                                        <button 
+                                            onClick={() => { setSubMode('latihan'); setKuisType(null); }}
+                                            className="bg-green-300 py-4.5 px-6 font-black text-lg border-4 border-black shadow-brutal rounded-2xl brutal-click flex justify-between items-center"
+                                        >
+                                            <span>🎮 LATIHAN SERU</span>
+                                            <span>➔</span>
+                                        </button>
+                                    </div>
+                                </>
+                            ) : subMode === 'belajar' ? (
+                                /* SUB-SCREEN: BELAJAR BULAN (1 - 12) */
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex justify-between items-center">
+                                        <button onClick={() => setSubMode(null)} className={`bg-white px-3 py-1.5 text-xs font-bold ${btnBrutal}`}>
+                                            ⬅️ Kembali
+                                        </button>
+                                        <span className="font-bold text-sm bg-yellow-300 px-3 py-1 border-2 border-black rounded-full">Musim Indonesia 🇮🇩</span>
+                                    </div>
+
+                                    <div className="flex flex-col gap-3 overflow-y-auto" style={{ maxHeight: '550px' }}>
+                                        {monthsData.map((m) => (
+                                            <div 
+                                                key={m.num}
+                                                onClick={() => speakSequential(m.en, m.id, speechRate)}
+                                                className={`p-3.5 flex justify-between items-center brutal-border-sm shadow-brutal-sm rounded-xl cursor-pointer brutal-click ${m.bg}`}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-9 h-9 rounded-lg border-2 border-black bg-white flex items-center justify-center font-black text-lg">
+                                                        {m.num}
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-black text-lg text-blue-600 leading-none">{m.en}</h4>
+                                                        <p className="text-xs font-bold text-gray-500 mt-1">Indonesia: {m.id}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="text-center shrink-0">
+                                                    <span className="text-2xl block">{m.emoji}</span>
+                                                    <span className="text-[9px] font-black uppercase text-gray-600 tracking-wider">Musim {m.weather}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                /* SUB-SCREEN: LATIHAN SERU (3 TIPE KUIS) */
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex justify-between items-center">
+                                        <button onClick={() => setSubMode(null)} className={`bg-white px-3 py-1.5 text-xs font-bold ${btnBrutal}`}>
+                                            ⬅️ Kembali
+                                        </button>
+                                        <span className="font-bold text-sm bg-green-300 px-3 py-1 border-2 border-black rounded-full">Kuis Bintang</span>
+                                    </div>
+
+                                    {kuisType === null ? (
+                                        <div className="flex flex-col gap-4 text-center mt-2">
+                                            <h3 className="font-black text-xl text-black">PILIH TIPE LATIHAN 🏆</h3>
+                                            
+                                            <button 
+                                                onClick={() => generateKuis(1)}
+                                                className="bg-sky-200 p-4 border-3 border-black shadow-brutal-sm rounded-xl font-bold brutal-click flex flex-col gap-1 text-left"
+                                            >
+                                                <span className="text-base font-black">Tipe 1: Tebak Musim Bulan 🌦️</span>
+                                                <span className="text-[11px] text-gray-600">Bulan ini masuk musim Hujan atau Panas Kemarau?</span>
+                                            </button>
+
+                                            <button 
+                                                onClick={() => generateKuis(2)}
+                                                className="bg-yellow-200 p-4 border-3 border-black shadow-brutal-sm rounded-xl font-bold brutal-click flex flex-col gap-1 text-left"
+                                            >
+                                                <span className="text-base font-black">Tipe 2: Angka Ke Nama Bulan 🗓️</span>
+                                                <span className="text-[11px] text-gray-600">Bulan ke-X adalah nama bulan apa?</span>
+                                            </button>
+
+                                            <button 
+                                                onClick={() => generateKuis(3)}
+                                                className="bg-rose-200 p-4 border-3 border-black shadow-brutal-sm rounded-xl font-bold brutal-click flex flex-col gap-1 text-left"
+                                            >
+                                                <span className="text-base font-black">Tipe 3: Nama Bulan Ke Angka 🔢</span>
+                                                <span className="text-[11px] text-gray-600">Bulan 'X' adalah urutan bulan keberapa?</span>
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col gap-4 mt-2">
+                                            {/* Pertanyaan Kuis */}
+                                            <div className="bg-yellow-100 border-3 border-black p-5 text-center rounded-2xl shadow-brutal-sm relative">
+                                                <span className="text-[10px] font-black uppercase text-gray-400 block tracking-widest">PERTANYAAN:</span>
+                                                
+                                                {kuisType === 1 && (
+                                                    <p className="text-2xl font-black text-indigo-900 mt-2 uppercase">
+                                                        Bulan {currentQ.id} ({currentQ.en}) masuk musim apa?
+                                                    </p>
+                                                )}
+                                                {kuisType === 2 && (
+                                                    <p className="text-2xl font-black text-indigo-900 mt-2 uppercase">
+                                                        Apakah nama bulan urutan ke-{currentQ.num}?
+                                                    </p>
+                                                )}
+                                                {kuisType === 3 && (
+                                                    <p className="text-2xl font-black text-indigo-900 mt-2 uppercase">
+                                                        Bulan {currentQ.id} ({currentQ.en}) adalah bulan ke berapa?
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            {/* Tombol Pilihan Jawaban */}
+                                            <div className="flex flex-col gap-3 mt-2">
+                                                {answersOptions.map((ans, idx) => (
+                                                    <button
+                                                        key={idx}
+                                                        onClick={() => handleAnswer(ans)}
+                                                        className="bg-white p-4 font-black border-3 border-black shadow-brutal-sm rounded-xl text-base brutal-click"
+                                                    >
+                                                        {kuisType === 1 ? ans : kuisType === 2 ? `${ans.en} (${ans.id})` : `Bulan Ke-${ans.num}`}
+                                                    </button>
+                                                ))}
+                                            </div>
+
+                                            {/* Feedback Box */}
+                                            {feedback && (
+                                                <div className={`p-4 text-center border-3 border-black shadow-brutal-sm rounded-xl font-black ${feedback === 'correct' ? 'bg-emerald-300 text-emerald-950' : 'bg-rose-300 text-rose-950'}`}>
+                                                    {feedback === 'correct' ? (
+                                                        <div className="flex flex-col items-center gap-1">
+                                                    <span className="text-3xl">🎉 HEBAT!</span>
+                                                    <span className="text-sm">Kamu mendapatkan ⭐ +10 Bintang!</span>
+                                                    <button onClick={() => generateKuis(kuisType)} className="mt-3 bg-white px-4 py-1.5 rounded-lg border-2 border-black text-xs font-black">SOAL BERIKUTNYA ➔</button>
+                                                </div>
+                                                    ) : (
+                                                        <div>
+                                                            <span className="text-lg">❌ COBA LAGI!</span>
+                                                            <p className="text-xs font-bold mt-1">Jawaban kurang tepat, yuk pilih jawaban lainnya!</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // 6. PROFIL MENU SCREEN (WITH SPEECH SPEED SETTING & BETTER STAR RESET)
         const ProfileScreen = ({ navigate, totalStars, resetStars, userName, setUserName, speechRate, setSpeechRate }) => {
             const [inputName, setInputName] = useState(userName);
             const [showResetModal, setShowResetModal] = useState(false);
@@ -1372,18 +1620,73 @@
                 return savedRate !== null ? parseFloat(savedRate) : 0.5; // Default: 0.5 (Kura-kura 0.5x)
             });
 
-            const [showOnboarding, setShowOnboarding] = useState(true);
+            // State Dinamis untuk Menampung Database Kamus Besar dari kamus.js
+            const [kamusData, setKamusData] = useState([]);
+            const [isLoadingKamus, setIsLoadingKamus] = useState(true);
+            const [loadingProgress, setLoadingProgress] = useState(0); // Progress bar nyata
+            const [showOnboarding, setShowOnboarding] = useState(false);
             const [tempName, setTempName] = useState('');
+            const [isUsingExternal, setIsUsingExternal] = useState(false); // Penanda apakah dari kamus.js
+
+            // Efek Deteksi & Pemuatan Dinamis kamus.js serta bilah kemajuan loading yang mulus
+            useEffect(() => {
+                let progressTimer;
+                let checkTimer;
+
+                // Animasi progress bar berjalan mandiri secara halus dari 0% ke 100%
+                progressTimer = setInterval(() => {
+                    setLoadingProgress((prev) => {
+                        if (prev >= 100) {
+                            clearInterval(progressTimer);
+                            return 100;
+                        }
+                        return prev + 4; // Bertambah mulus setiap 50ms
+                    });
+                }, 50);
+
+                // Memeriksa pemuatan file kamus.js
+                checkTimer = setInterval(() => {
+                    const loadedExternal = window.JJ_Kamus_Lengkap && window.JJ_Kamus_Lengkap.length > 100;
+                    
+                    // Kita tunggu sampai progres animasi menyentuh 100% ATAU file eksternal siap
+                    setLoadingProgress((currentProgress) => {
+                        if (currentProgress >= 100 || loadedExternal) {
+                            clearInterval(checkTimer);
+                            clearInterval(progressTimer);
+                            
+                            if (loadedExternal) {
+                                setKamusData(window.JJ_Kamus_Lengkap);
+                                setIsUsingExternal(true);
+                            } else {
+                                // Jika file kamus.js gagal meload setelah progress selesai, gunakan fallback
+                                setKamusData(getKamusData());
+                                setIsUsingExternal(false);
+                            }
+                            
+                            setLoadingProgress(100);
+                            setIsLoadingKamus(false);
+                        }
+                        return currentProgress;
+                    });
+                }, 100);
+
+                return () => {
+                    clearInterval(progressTimer);
+                    clearInterval(checkTimer);
+                };
+            }, []);
 
             // Simpan perubahan nama ke dalam localStorage browser
             useEffect(() => {
-                if (userName !== '') {
-                    localStorage.setItem('eb_username', userName);
-                    setShowOnboarding(false);
-                } else {
-                    setShowOnboarding(true);
+                if (!isLoadingKamus) {
+                    if (userName !== '') {
+                        localStorage.setItem('eb_username', userName);
+                        setShowOnboarding(false);
+                    } else {
+                        setShowOnboarding(true);
+                    }
                 }
-            }, [userName]);
+            }, [userName, isLoadingKamus]);
 
             // Simpan perubahan bintang ke dalam localStorage browser
             useEffect(() => {
@@ -1418,8 +1721,9 @@
             const renderScreen = () => {
                 switch(currentScreen) {
                     case 'abjad': return <AbjadScreen navigate={setCurrentScreen} speechRate={speechRate} />;
-                    case 'games': return <GamesScreen navigate={setCurrentScreen} addStars={addStars} speechRate={speechRate} />;
-                    case 'kamus': return <KamusScreen navigate={setCurrentScreen} speechRate={speechRate} />;
+                    case 'games': return <GamesScreen navigate={setCurrentScreen} addStars={addStars} speechRate={speechRate} kamusData={kamusData} />;
+                    case 'kamus': return <KamusScreen navigate={setCurrentScreen} speechRate={speechRate} kamusData={kamusData} />;
+                    case 'misi': return <MisiScreen navigate={setCurrentScreen} addStars={addStars} speechRate={speechRate} />;
                     case 'profile': return (
                         <ProfileScreen 
                             navigate={setCurrentScreen} 
@@ -1436,6 +1740,26 @@
                 }
             };
 
+            // 1. LOADING SCREEN DENGAN PROGRESS BAR BERGERAK NYATA
+            if (isLoadingKamus) {
+                return (
+                    <div className="w-full max-w-[390px] h-[844px] max-h-[95vh] bg-[#FDE047] border-[6px] border-black rounded-[32px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center p-6 text-center">
+                        <div className="text-7xl animate-bounce mb-6">📖</div>
+                        <h3 className="font-black text-2xl text-black leading-none uppercase">JJ KIDS</h3>
+                        
+                        <div className="w-48 bg-white border-[3px] border-black h-6 rounded-full overflow-hidden mt-6 shadow-brutal-sm relative">
+                            {/* Bilah kemajuan yang bergerak nyata secara halus */}
+                            <div 
+                                className="bg-green-400 h-full border-r-[3px] border-black transition-all duration-100 ease-out"
+                                style={{ width: `${loadingProgress}%` }}
+                            ></div>
+                        </div>
+                        
+                        <p className="text-[10px] font-black text-gray-700 mt-3 tracking-wider uppercase">Loading: {loadingProgress}%</p>
+                    </div>
+                );
+            }
+
             return (
                 /* Mobile Device Mockup Wrapper */
                 <div className="w-full max-w-[390px] h-[844px] max-h-[95vh] bg-dot-pattern border-[6px] border-black rounded-[32px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden flex flex-col">
@@ -1451,6 +1775,11 @@
                     {/* Main Content Area (Scrollable) */}
                     <div className="flex-1 overflow-y-auto no-scrollbar p-5 relative z-10">
                         {renderScreen()}
+                    </div>
+
+                    {/* TULISAN INFORMASI SUMBER KOSA KATA DI SUDUT KANAN BAWAH */}
+                    <div className="absolute bottom-2 right-4 text-[9px] font-black text-gray-400/90 z-50 pointer-events-none select-none">
+                        {isUsingExternal ? "A dari kamus.js" : "A dari internal"}
                     </div>
 
                     {/* ONBOARDING MODAL (SELAMAT DATANG - PERTAMA KALI MASUK) */}
